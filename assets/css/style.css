@@ -1,0 +1,22 @@
+.headerBar{
+    text-align: center;
+}
+
+.dropDown{
+    padding-left: 400px;
+    padding-right: 400px;
+}
+
+#conferenceChoice{
+    text-align: center;
+}
+
+#selectBtn{
+    padding: 10px;
+    margin: 24px;
+    cursor: pointer;
+    font-size: 24px;
+    background-color: #fff;
+    color: #000;
+
+}
