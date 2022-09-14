@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project 1</title>
     <link rel="stylesheet" href="./assets/css/style.css">
+
     <link rel="stylesheet" href="./assets/css/foundation.css">
     <link rel="stylesheet" href="./assets/css/app.css">
 
@@ -19,20 +20,32 @@
         <header class="top-bar">
             <div class="top-bar-left">
             <ul class="menu">
-                <li class="menu-text">Yeti Agency</li>
                 <li><a href="#">One</a></li>
                 <li><a href="#">Two</a></li>
+                <li><a href="#">Three</a></li>
+                <li><a href="#">Four</a></li>
             </ul>
             </div>
             <div class="top-bar-right">
-            <ul class="menu">
-                <li><a href="#">Three</a></li>
-                <li><a href="#">Four</a></li>
-                <li><a href="#">Five</a></li>
-                <li><a href="#">Six</a></li>
-            </ul>
+                <p id="timeDate"></p>
             </div>
         </header>
+         <div class="headerBar">
+                <h1>College Sports News</h1>
+                <div class="dropDown">
+                    <label for="conferenceChoice">Choose a conference!</label>
+                    <select id="conferenceChoice">
+                      <option disabled selected>Pick One...</option>
+                      <option value="1">Atlantic Coast Conference (ACC)</option>
+                      <option value="2">Big Ten Conference </option>
+                      <option value="3">Big 12 Conference</option>
+                      <option value="4">Pac-12 Conference</option>
+                      <option value="5">Southeastern Conference (SEC)</option>
+                    </select>
+                    <!-- <button id="selectBtn" style="border:1px solid #000;">Choose</button> -->
+                  </div>
+            </div>
+
         <main class="grid-x" id="main-row" style="margin-top:10px;">
             <div class="medium-6 large-6 cell small-order-2 medium-order-1" style="border:1px solid #000" id="summary-box">
                 <ul class="tabs" data-tabs id="example-tabs">
@@ -93,10 +106,19 @@
 
         </footer>
     </div>
+
     <script src="assets/js/jquery.js"></script>
     <script src="assets/js/what-input.js"></script>
     <script src="assets/js/foundation.js"></script>
     <script src="assets/js/app.js"></script>
    <script src="./assets/js/script.js"></script>
+
+    <!-- moment Jquery -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"
+    ></script>
+    <script src="./assets/js/script.js"></script>
+
 </body>
 </html>
