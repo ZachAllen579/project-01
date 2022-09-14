@@ -9,4 +9,30 @@
 
 #conferenceChoice{
     text-align: center;
+    border-color: black;
+}
+
+#logo{
+    max-width: 10%;
+    max-height: 10%;
+}
+
+.siteName{
+    display: flex;
+    justify-content:flex-start ;
+    align-items: center;
+    padding-left: 265px;
+}
+
+#teamName{
+    text-align: center;
+}
+
+.favoriteTeamDropDown{
+    padding: 200px 150px 10px 150px;
+}
+
+#favoriteTeam{
+    text-align: center;
+    border-color: black;
 }
