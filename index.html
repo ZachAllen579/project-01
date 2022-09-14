@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="no-js" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project 1</title>
     <link rel="stylesheet" href="./assets/css/style.css">
-    <!-- Foundation CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.5/dist/css/foundation.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/foundation.css">
+    <link rel="stylesheet" href="./assets/css/app.css">
+
+
+<!-- foundation-rtl.min.css: Compressed CSS with right-to-left reading direction -->
+</head>
 
 </head>
 <body>
@@ -29,15 +33,42 @@
             </ul>
             </div>
         </header>
-        <main>
-            <div class="grid-x grid-margin-x">
-                <div class="medium-6 cell small-order-2 medium-order-1">
-                  <h2>Our Agency, our selves.</h2>
-                  <p>Vivamus luctus urna sed urna ultricies ac tempor dui sagittis. In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam porttitor mauris, quis sollicitudin sapien justo in libero. Vestibulum mollis mauris enim. Morbi euismod magna ac lorem rutrum elementum. Donec viverra auctor.</p>
-                </div>
-                <div class="medium-6 cell small-order-1 medium-order-2">
-                  <img src="https://fillmurray.com/200/300" />
-                </div>
+        <main class="grid-x" id="main-row" style="margin-top:10px;">
+            <div class="medium-6 large-6 cell small-order-2 medium-order-1" style="border:1px solid #000" id="summary-box">
+                <ul class="tabs" data-tabs id="example-tabs">
+                    <li class="tabs-title"><a href="#panel1" aria-selected="true">Tab 1</a></li>
+                    <li class="tabs-title is-active""><a data-tabs-target="panel2" href="#panel2">Current Standings</a></li>
+                  </ul>
+           
+                  <div class="tabs-content" data-tabs-content="example-tabs">
+                    <div class="tabs-panel" id="panel1">
+                      <p>Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus.</p>
+                    </div>
+                    <div class="tabs-panel is-active" id="panel2">
+                        <table class="unstriped" id="standings-table">
+                            <thead>
+                                <tr>
+                                    <th>Team</th>
+                                    <th>Conf</th>
+                                    <th>Overall</th>
+                                    <th>Strk</th>
+                                </tr>
+                            </thead>
+                            <tbody id="standings-table-body">
+                                <tr>
+                                    <td>Texas A&M University</td>
+                                    <td>1-0</td>
+                                    <td>2-0</td>
+                                    <td>W2</td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                  </div>
+            </div>
+            <div class="medium-6 cell small-order-1 medium-order-2 " style="border:1px solid #000">
+                <img src="https://loremflickr.com/640/360" />
             </div>
         </main>
 
@@ -67,8 +98,10 @@
 
         </footer>
     </div>
-   <!-- Foundation JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.5/dist/js/foundation.min.js" crossorigin="anonymous"></script>
-    <script src="./assets/js/script.js"></script>
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/what-input.js"></script>
+    <script src="assets/js/foundation.js"></script>
+    <script src="assets/js/app.js"></script>
+   <script src="./assets/js/script.js"></script>
 </body>
 </html>
