@@ -36,11 +36,11 @@
                     <label for="conferenceChoice">Choose a conference!</label>
                     <select id="conferenceChoice">
                       <option disabled selected>Pick One...</option>
-                      <option value="1">Atlantic Coast Conference (ACC)</option>
-                      <option value="2">Big Ten Conference </option>
-                      <option value="3">Big 12 Conference</option>
-                      <option value="4">Pac-12 Conference</option>
-                      <option value="5">Southeastern Conference (SEC)</option>
+                      <option value="ACC">Atlantic Coast Conference (ACC)</option>
+                      <option value="B1G">Big Ten Conference </option>
+                      <option value="B12">Big 12 Conference</option>
+                      <option value="PAC">Pac-12 Conference</option>
+                      <option value="SEC">Southeastern Conference (SEC)</option>
                     </select>
                     <!-- <button id="selectBtn" style="border:1px solid #000;">Choose</button> -->
                   </div>
@@ -49,11 +49,11 @@
         <main class="grid-x" id="main-row" style="margin-top:10px;">
             <div class="medium-6 large-6 cell small-order-2 medium-order-1" style="border:1px solid #000" id="summary-box">
                 <ul class="tabs" data-tabs id="example-tabs">
-                    <li class="tabs-title"><a href="#panel1" aria-selected="true">Tab 1</a></li>
+                    <li class="tabs-title" id="tab-1"><a href="#panel1" aria-selected="true">Tab 1</a></li>
                     <li class="tabs-title is-active""><a data-tabs-target="panel2" href="#panel2">Current Standings</a></li>
                   </ul>
            
-                  <div class="tabs-content" data-tabs-content="example-tabs">
+                  <div class="tabs-content" data-tabs-content="example-tabs" id="tabs-box">
                     <div class="tabs-panel" id="panel1">
                       <p>Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus.</p>
                     </div>
@@ -107,18 +107,16 @@
         </footer>
     </div>
 
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
     <script src="assets/js/jquery.js"></script>
     <script src="assets/js/what-input.js"></script>
     <script src="assets/js/foundation.js"></script>
     <script src="assets/js/app.js"></script>
    <script src="./assets/js/script.js"></script>
-
+   
     <!-- moment Jquery -->
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"
-    ></script>
-    <script src="./assets/js/script.js"></script>
+    
+    
 
 </body>
 </html>
