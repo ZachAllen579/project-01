@@ -7,16 +7,19 @@ let summaryPanel1 = $('#panel1');
 let summaryPanel3 = $('#panel3');
 let tabLabel3 = $('#panel3-label');
 let panel3TBody = $('#current-games-tbody');
+let headlinesBox = $('#headlines-box');
 // dynamic page variables
 let currentWeek = whatWeek(moment().format('YYYY-MM-DD'));
-let confCode = localStorage.getItem("dropDownValue");
+let confCode = localStorage.getItem("lastChosenConference");
     if ((confCode == null)|| (confCode=='')){
         confCode = 'SEC'
     }
+
     let YoutubeApiKey = 'AIzaSyCm0R29hvXS6W3QJE9f71gZg7i_ybzQyyM';
-    fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=collegefootball&type=video&key=${YoutubeApiKey}`)
-    .then(response => response.json())
-    .then(data => console.log(data))
+
+// fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=collegefootball&type=video&key=${YoutubeApiKey}`)
+// .then(response => response.json())
+// .then(data => console.log(data))
 
 //function to populate the standings based on the conference code.  
 function populateStandings(currentConfCode){
@@ -111,6 +114,93 @@ function whatWeek(date){
     return weekNum;
 }
 
+//function to return beginning week date
+function whatBeginningDate(weekNum){
+    //date should be YYYY-MM-DD format.
+    let dateString = '';
+
+
+    switch(weekNum){
+        case 1:
+            dateString = '2022-08-05';
+            break;
+        case 2:
+            dateString = '2022-09-06';
+            break;
+        case 3:
+            dateString = '2022-09-13';
+            break;
+        case 4:
+            dateString = '2022-09-20';
+            break;
+        case 5:
+            dateString = '2022-09-27';
+            break;
+        case 6:
+            dateString = '2022-10-04';
+            break;
+        case 7:
+            dateString = '2022-10-11';
+            break;
+        case 8:
+            dateString = '2022-10-18';
+            break;
+        case 9:
+            dateString = '2022-10-24';
+            break;
+        case 10:
+            dateString = '2022-11-01';
+            break;
+        case 11:
+            dateString = '2022-11-08';
+            break;
+        case 12:
+            dateString = '2022-11-15';
+            break;
+        case 13:
+            dateString = '2022-11-22';
+            break;
+        case 14:
+            dateString = '2022-11-29';
+            break;
+        case 15:
+            dateString = '2022-12-05';
+            break;
+       
+        default:
+            dateString = '2022-12-12';
+    }
+    
+
+    return dateString;
+}
+
+//function to return the conference code for searching in APIs
+function whatConf(code){
+    let tempConfString = "";
+    
+    if (code==='B12'){
+        tempConfString="Big 12";
+    } else if (code==='B1G'){
+        tempConfString="Big Ten";
+    } else if (code==='SEC'){
+        tempConfString="SEC";
+    } else if (code ==='CUSA'){
+        tempConfString="Conference USA";
+    } else if (code ==='IND'){
+        tempConfString = "FBS";
+    } else if (code ==='MAC'){
+        tempConfString = "Mid-American";
+    } else if (code === 'MWC'){
+        tempConfString = "Mountain West";
+    } else if (code === 'SBC'){
+        tempConfString = "Sun Belt";
+    } else if (code === 'PAC'){
+        tempConfString = "Pac 12";
+    }
+
+    return tempConfString;
+}
 
 
 //function to get the previous weeks games and optionally the next weeks games
@@ -125,6 +215,41 @@ function getGames(week){
     
 }
 
+async function populateHeadlines(){
+    
+    let newsAPIKey = "5c8ccee4ac6f4dedb36d4f2ab9900626";
+    let fromDate = moment(whatBeginningDate(currentWeek)).subtract(2, 'days').format('YYYY-MM-DD');
+    let currentConfString = whatConf(confCode);
+    let remoteEndPoint = `https://newsapi.org/v2/everything?q=${encodeURIComponent(currentConfString)}%20week%20${currentWeek-1}%20College%20Football&apiKey=${newsAPIKey}&from=${fromDate}&pageSize=4`
+    headlinesBox.children('h3').text(`Week ${currentWeek-1} Headlines`);
+    fetch(remoteEndPoint)
+    .then(function (response) {
+         return response.json();
+    })
+    .then(function(data){
+        console.log(remoteEndPoint);
+        console.log(data);
+        let articles = data.articles;
+        headlinesBox.children('div').remove();
+        for (let i=0; i< articles.length; i++){
+            let divObj = ``;
+            divObj += `<div class="medium-3 cell custom-article-box align-middle">
+                            <a href="${articles[i].url}" target="_blank">
+                            <div class="" id="article-div-box">
+                                <img src="${articles[i].urlToImage}" />
+                            </div>
+                            <h4 class="small">${articles[i].title}</h4>
+                            <article>
+                            ${articles[i].description}
+                            </article>
+                            </a>
+                        </div>`;
+            headlinesBox.append(divObj);
+        }
+       
+        
+    });
+}
 
 // function to populate last weeks' games
 async function populateGames(){
@@ -163,6 +288,7 @@ async function populateGames(){
     let currentWeekGames = await getGames(currentWeek);
     if (currentWeek<16){
         console.log('currentWeek:' + currentWeek);
+        console.log(confCode);
         //panel3-label set text
         tabLabel3.text(`Week ${currentWeek} Games`);
         // clear out the old table
@@ -170,13 +296,14 @@ async function populateGames(){
         // append table body rows
         tableObject = ``;
        
-
+        console.log(currentWeekGames);
         for (let i=0; i<currentWeekGames.length; i++ ){     
+            console.log(i);
             tableObject+=`<tr>
                                 <td><a href="#" class="school-link" data-school="${currentWeekGames[i].away_team}">${currentWeekGames[i].away_team}</a> @ <a href="#" class="school-link" data-school="${currentWeekGames[i].home_team}">${currentWeekGames[i].home_team}</a></td>
                                 <td>${moment(currentWeekGames[i].start_date).format('MM/DD/YYYY')} </td>
                                 <td>${moment(currentWeekGames[i].start_date).format('h A')}</td>
-                                <td>${lastWeekGames[i].venue}</td>
+                                <td>${currentWeekGames[i].venue}</td>
                         </tr>`;
         }
         panel3TBody.append(tableObject);
@@ -188,6 +315,7 @@ async function populateGames(){
 function populateAll(){
     populateStandings(confCode); 
     populateGames();
+    populateHeadlines();
 
 }
 
