@@ -1,3 +1,9 @@
+
+let confCode = localStorage.getItem("dropDownValue");
+    if ((confCode == null)|| (confCode=='')){
+        confCode = 'SEC'
+    }
+
 // Date and time in the top right
 let time = moment().format("MMM Do, YYYY, hh:mm:ss");
 $("#timeDate").text(time);
@@ -7,9 +13,7 @@ let currentTime = setInterval(function () {
     $("#timeDate").text(time);
 }, 1000)
 
-function test() {
-    renderLastRegistered()
-}
+
 // Drop down box to be able to choose what conference you want to see
 
 let conferenceDropDownInput = document.getElementById('conferenceChoice')
@@ -39,9 +43,11 @@ favoriteTeamDropDown.addEventListener("change", function favoriteTeamDropDown() 
     favoriteTeam.innerText = favoriteTeamDropDown
 })
 
+function renderLastRegistered() {
+    favoriteTeam.textContent = lastFavoriteTeam
+    favoriteTeamDropDownResults.value = lastFavoriteTeam
+    
+    conferenceDropDownInput.value = lastChosenConference
+}
 
-favoriteTeam.textContent = lastFavoriteTeam
-favoriteTeamDropDownResults.value = lastFavoriteTeam
-
-conferenceDropDownInput.value = lastChosenConference
-
+renderLastRegistered()
