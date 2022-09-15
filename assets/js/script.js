@@ -14,14 +14,14 @@ let currentTime = setInterval(function () {
 }, 1000)
 
 
-// Drop down box to be able to choose what conference you want to see
 
 let conferenceDropDownInput = document.getElementById('conferenceChoice')
 let favoriteTeam = document.getElementById("teamName")
 let favoriteTeamDropDown = document.getElementById('favoriteTeam')
 let lastFavoriteTeam = localStorage.getItem("favoriteTeam");
-let favoriteTeamDropDownResults = document.getElementById('favoriteTeam');
 let lastChosenConference = localStorage.getItem("lastChosenConference");
+
+// Drop down box to be able to choose what conference you want to see
 
 conferenceDropDownInput.addEventListener("change", function conferenceDropDown() {
     let dropDownResults = document.getElementById('conferenceChoice');
@@ -32,7 +32,6 @@ conferenceDropDownInput.addEventListener("change", function conferenceDropDown()
 })
 
 // Drop down box to be able to choose what your favorite team is
-
 
 favoriteTeamDropDown.addEventListener("change", function favoriteTeamDropDown() {
     let favoriteTeamDropDownResults = document.getElementById('favoriteTeam');
@@ -45,7 +44,7 @@ favoriteTeamDropDown.addEventListener("change", function favoriteTeamDropDown() 
 
 function renderLastRegistered() {
     favoriteTeam.textContent = lastFavoriteTeam
-    favoriteTeamDropDownResults.value = lastFavoriteTeam
+    favoriteTeamDropDown.value = lastFavoriteTeam
     
     conferenceDropDownInput.value = lastChosenConference
 }
