@@ -38,8 +38,8 @@ favoriteTeamDropDown.addEventListener("change", function favoriteTeamDropDown() 
     let favoriteTeamDropDown = favoriteTeamDropDownResults.options[favoriteTeamDropDownResults.selectedIndex].value;
 
     console.log(favoriteTeamDropDown)
-    localStorage.setItem("favoriteTeam", favoriteTeamDropDown) 
     favoriteTeam.innerText = favoriteTeamDropDown
+    localStorage.setItem("favoriteTeam", favoriteTeamDropDown) 
 })
 
 function renderLastRegistered() {
