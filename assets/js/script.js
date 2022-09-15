@@ -13,7 +13,10 @@ let confCode = localStorage.getItem("dropDownValue");
     if ((confCode == null)|| (confCode=='')){
         confCode = 'SEC'
     }
-
+    let YoutubeApiKey = 'AIzaSyCm0R29hvXS6W3QJE9f71gZg7i_ybzQyyM';
+    fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=collegefootball&type=video&key=${YoutubeApiKey}`)
+    .then(response => response.json())
+    .then(data => console.log(data))
 
 //function to populate the standings based on the conference code.  
 function populateStandings(currentConfCode){
