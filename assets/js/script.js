@@ -175,7 +175,7 @@ function whatBeginningDate(weekNum){
     return dateString;
 }
 
-//function to return the conference code for searching in APIs
+//function to return the conference code string for searching in APIs
 function whatConf(code){
     let tempConfString = "";
     
@@ -274,9 +274,9 @@ async function populateGames(){
                    // console.log(lastWeekGames);
     for (let i=0; i<lastWeekGames.length; i++ ){
        tableObject+=`<tr>
-                        <td><a href="#" class="school-link" data-school="${lastWeekGames[i].away_team}">${lastWeekGames[i].away_team}</a> - ${lastWeekGames[i].away_points} @ <a href="#" class="school-link" data-school="${lastWeekGames[i].home_team}">${lastWeekGames[i].home_team}</a> - ${lastWeekGames[i].home_points}</td>
-                        <td> ${moment(lastWeekGames[i].start_date).format('MM/DD/YYYY')}</td>
-                        <td>${lastWeekGames[i].venue}</td>
+                        <td class="matchup-text"><a href="#" class="school-link" data-school="${lastWeekGames[i].away_team}">${lastWeekGames[i].away_team}</a> - ${lastWeekGames[i].away_points} <br/>@ <a href="#" class="school-link" data-school="${lastWeekGames[i].home_team}">${lastWeekGames[i].home_team}</a> - ${lastWeekGames[i].home_points}</td>
+                        <td class="date-text"> ${moment(lastWeekGames[i].start_date).format('MM/DD')}</td>
+                        <td class="venue-text">${lastWeekGames[i].venue}</td>
                         </tr>`;
     }
     tableObject += `</tbody>
@@ -300,10 +300,10 @@ async function populateGames(){
         for (let i=0; i<currentWeekGames.length; i++ ){     
             console.log(i);
             tableObject+=`<tr>
-                                <td><a href="#" class="school-link" data-school="${currentWeekGames[i].away_team}">${currentWeekGames[i].away_team}</a> @ <a href="#" class="school-link" data-school="${currentWeekGames[i].home_team}">${currentWeekGames[i].home_team}</a></td>
-                                <td>${moment(currentWeekGames[i].start_date).format('MM/DD/YYYY')} </td>
-                                <td>${moment(currentWeekGames[i].start_date).format('h A')}</td>
-                                <td>${currentWeekGames[i].venue}</td>
+                                <td class="matchup-text"><a href="#" class="school-link" data-school="${currentWeekGames[i].away_team}">${currentWeekGames[i].away_team}</a> <br/>@ <a href="#" class="school-link" data-school="${currentWeekGames[i].home_team}">${currentWeekGames[i].home_team}</a></td>
+                                <td class="date-text">${moment(currentWeekGames[i].start_date).format('MM/DD')} </td>
+                                <td class="date-text">${moment(currentWeekGames[i].start_date).format('h A')}</td>
+                                <td class="venue-text">${currentWeekGames[i].venue}</td>
                         </tr>`;
         }
         panel3TBody.append(tableObject);
