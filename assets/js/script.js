@@ -1,3 +1,5 @@
+var YoutubeApiKey = 'AIzaSyCm0R29hvXS6W3QJE9f71gZg7i_ybzQyyM';
+
 
 // element variables
 let standingsTable = $('#standings-table-body');
@@ -9,8 +11,13 @@ let localEndPoint = `http://127.0.0.1:3001/records?year=2022&conference=${confCo
 // proxy endpoint nodejs app at our heroku deployment
 let remoteEndPoint = `https://forwarding-app-project-1.herokuapp.com/records?year=2022&conference=${confCode}`;
 
+
+fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=collegefootball&type=video&key=${YoutubeApiKey}`)
+.then(response => response.json())
+.then(data => console.log(data))
+
 //function to populate the standings based on the conference code.  
-function populateStandings(){
+function populateStandings()
     fetch(remoteEndPoint)
     .then(function (response) {
         if (response.status===200){
@@ -64,5 +71,4 @@ dropDownInput.addEventListener("change", function dropDown() {
     console.log(dropDownValue)
     localStorage.setItem("dropDownValue", dropDownValue)
 })
-
 
