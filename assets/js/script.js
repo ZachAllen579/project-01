@@ -229,21 +229,7 @@ conferenceDropDownInput.addEventListener("change", function conferenceDropDown()
     populateAll();
 })
 
-// Drop down box to be able to choose what your favorite team is
-
-favoriteTeamDropDown.addEventListener("change", function favoriteTeamDropDown() {
-    let favoriteTeamDropDownResults = document.getElementById('favoriteTeam');
-    let favoriteTeamDropDown = favoriteTeamDropDownResults.options[favoriteTeamDropDownResults.selectedIndex].value;
-
-    console.log(favoriteTeamDropDown)
-    favoriteTeam.innerText = favoriteTeamDropDown
-    localStorage.setItem("favoriteTeam", favoriteTeamDropDown) 
-})
-
-function renderLastRegistered() {
-    favoriteTeam.textContent = lastFavoriteTeam
-    favoriteTeamDropDown.value = lastFavoriteTeam
-    
+function renderLastRegistered() {    
     conferenceDropDownInput.value = lastChosenConference
 }
 
