@@ -9,14 +9,32 @@
 
 #conferenceChoice{
     text-align: center;
+    border-color: black;
 }
 
-#selectBtn{
-    padding: 10px;
-    margin: 24px;
-    cursor: pointer;
-    font-size: 24px;
-    background-color: #fff;
-    color: #000;
-
+#logo{
+    max-width: 10%;
+    max-height: 10%;
 }
+
+.siteName{
+    display: flex;
+    justify-content:flex-start ;
+    align-items: center;
+    padding-left: 265px;
+}
+
+
+.favoriteTeamDropDown{
+    padding: 200px 150px 10px 150px;
+}
+
+#favoriteTeam{
+    text-align: center;
+    border-color: black;
+}
+
+#teamName{
+    text-align: center;
+}
+
