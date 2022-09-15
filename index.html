@@ -51,6 +51,7 @@
                 <ul class="tabs" data-tabs id="example-tabs">
                     <li class="tabs-title" id="tab-1"><a href="#panel1" aria-selected="true">Tab 1</a></li>
                     <li class="tabs-title is-active""><a data-tabs-target="panel2" href="#panel2">Current Standings</a></li>
+                    <li class="tabs-title" role="presentation" ><a href="#panel3" data-tabs-target="panel3" id="panel3-label" aria-controls="panel3" role="tab">Week N Games</a></li>
                   </ul>
            
                   <div class="tabs-content" data-tabs-content="example-tabs" id="tabs-box">
@@ -71,6 +72,21 @@
                                 
                             </tbody>
 
+                        </table>
+                    </div>
+                    <div class="tabs-panel" id="panel3" role="tabpanel" aria-labelledby="panel3-label">
+                        <table>
+                        <thead>
+                        <tr>
+                            <th width="200">Matchup</th>
+                            <th>Date</th>
+                            <th width="150">Time</th>
+                            <th width="150">Venue</th>
+                        </tr>
+                        </thead>
+                        <tbody id="current-games-tbody">
+        
+                        </tbody>
                         </table>
                     </div>
                   </div>

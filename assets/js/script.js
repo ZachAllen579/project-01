@@ -4,20 +4,24 @@ let standingsTable = $('#standings-table-body');
 let tab1Title = $('#tab-1');
 let tabsMenu = $('#example-tabs');
 let tabsBox = $('#tabs-box');
-
-// temporary conference code
-
-
-
-//function to populate the standings based on the conference code.  
-function populateStandings(confCode){
+let summaryPanel1 = $('#panel1');
+let summaryPanel3 = $('#panel3');
+let tabLabel3 = $('#panel3-label');
+let panel3TBody = $('#current-games-tbody');
+// dynamic page variables
+let currentWeek = whatWeek(moment().format('YYYY-MM-DD'));
+let confCode = localStorage.getItem("dropDownValue");
     if ((confCode == null)|| (confCode=='')){
         confCode = 'SEC'
     }
-    // local end point for local testing
-    let localEndPoint = `http://127.0.0.1:3001/records?year=2022&conference=${confCode}`;
+
+
+//function to populate the standings based on the conference code.  
+function populateStandings(currentConfCode){
+     // local end point for local testing
+    let localEndPoint = `http://127.0.0.1:3001/records?year=2022&conference=${currentConfCode}`;
     // proxy endpoint nodejs app at our heroku deployment
-    let remoteEndPoint = `https://forwarding-app-project-1.herokuapp.com/records?year=2022&conference=${confCode}`;
+    let remoteEndPoint = `https://forwarding-app-project-1.herokuapp.com/records?year=2022&conference=${currentConfCode}`;
     fetch(remoteEndPoint)
     .then(function (response) {
         if (response.status===200){
@@ -36,7 +40,7 @@ function populateStandings(confCode){
         for (let i=0; i<data.length; i++){
             standingsTable.append(`
                 <tr>
-                    <td data-school="${data[i].team}">${data[i].team}</td>
+                    <td><a href="#" class="school-link" data-school="${data[i].team}">${data[i].team}</a></td>
                     <td>${data[i].conferenceGames.wins}-${data[i].conferenceGames.losses}</td>
                     <td>${data[i].total.wins}-${data[i].total.losses}</td>
                     <td>${data[i].total.games}</td>
@@ -107,49 +111,87 @@ function whatWeek(date){
 
 
 
+//function to get the previous weeks games and optionally the next weeks games
+function getGames(week){
+    let remoteEndPoint = `https://forwarding-app-project-1.herokuapp.com/games?year=2022&week=${week}&seasonType=regular&conference=${confCode}`;
+    return fetch(remoteEndPoint)
+    .then(function (response) {
+         return response.json();
+       
+    })
+          
+    
+}
+
 
 // function to populate last weeks' games
-function populateGames(){
-    //current week
-    let currentWeek = whatWeek(moment().format('YYYY-MM-DD'));
+async function populateGames(){
+    
     tab1Title.children().text(`week ${currentWeek-1} game results`);
-    if (currentWeek<16){
-        tabsMenu.append(`<li class="tabs-title" role="presentation" ><a href="#panel3" data-tabs-target="panel3" id="panel3-label" aria-controls="panel3" role="tab">Week ${currentWeek} Games</a></li>`);
-        let tableObject = "";
-        tableObject = `<div class="tabs-panel" id="panel3" role="tabpanel" aria-labelledby="panel3-label">
-                            <table>
-                            <thead>
-                            <tr>
-                                <th width="200">Matchup</th>
-                                <th>Date</th>
-                                <th width="150">Time</th>
-                                <th width="150">?</th>
-                            </tr>
-                            </thead>
-                            <tbody>`;
+    let lastWeekGames =  await getGames(currentWeek-1);
+    
+    let tableObject = ``;
+    //reset the current table
+    summaryPanel1.html(``);
+    tableObject = `<table>
+                    <thead>
+                    <tr>
+                        <th width="200">Matchup Results</th>
+                        <th>Date</th>
+                        <th>Venue</th>
                         
-                tableObject+=`<tr>
-                                    <td>Content Goes Here</td>
-                                    <td>This is </td>
-                                    <td>Content Goes Here</td>
-                                    <td>Content Goes Here</td>
-                              </tr>`;
-                            
-            tableObject+=`  </tbody>
-                            </table>
-                        </div>`;
-        tabsBox.append(tableObject);
+                    </tr>
+                    </thead>
+                    <tbody>`;
+                    //console.log(lastWeekGames.length);
+                   // console.log(lastWeekGames);
+    for (let i=0; i<lastWeekGames.length; i++ ){
+       tableObject+=`<tr>
+                        <td><a href="#" class="school-link" data-school="${lastWeekGames[i].away_team}">${lastWeekGames[i].away_team}</a> - ${lastWeekGames[i].away_points} @ <a href="#" class="school-link" data-school="${lastWeekGames[i].home_team}">${lastWeekGames[i].home_team}</a> - ${lastWeekGames[i].home_points}</td>
+                        <td> ${moment(lastWeekGames[i].start_date).format('MM/DD/YYYY')}</td>
+                        <td>${lastWeekGames[i].venue}</td>
+                        </tr>`;
+    }
+    tableObject += `</tbody>
+                   </table>`
+
+    
+    summaryPanel1.append(tableObject);
+
+    let currentWeekGames = await getGames(currentWeek);
+    if (currentWeek<16){
+        console.log('currentWeek:' + currentWeek);
+        //panel3-label set text
+        tabLabel3.text(`Week ${currentWeek} Games`);
+        // clear out the old table
+        panel3TBody.html('');
+        // append table body rows
+        tableObject = ``;
+       
+
+        for (let i=0; i<currentWeekGames.length; i++ ){     
+            tableObject+=`<tr>
+                                <td><a href="#" class="school-link" data-school="${currentWeekGames[i].away_team}">${currentWeekGames[i].away_team}</a> @ <a href="#" class="school-link" data-school="${currentWeekGames[i].home_team}">${currentWeekGames[i].home_team}</a></td>
+                                <td>${moment(currentWeekGames[i].start_date).format('MM/DD/YYYY')} </td>
+                                <td>${moment(currentWeekGames[i].start_date).format('h A')}</td>
+                                <td>${lastWeekGames[i].venue}</td>
+                        </tr>`;
+        }
+        panel3TBody.append(tableObject);
     }
 
 
 }
 
+function populateAll(){
+    populateStandings(confCode); 
+    populateGames();
+
+}
 
 //initialization function to run on page load.
 function init(){
-    let confCode = localStorage.getItem("dropDownValue");
-    populateStandings(confCode); 
-    populateGames();
+    populateAll();
 }
 //page is loaded, so let's run our initial code
 init();
@@ -163,13 +205,17 @@ $("#timeDate").text(time);
 
 let dropDownInput = document.getElementById('conferenceChoice')
 
+
+
+
 dropDownInput.addEventListener("change", function dropDown() {
     let dropDownResults = document.getElementById('conferenceChoice');
     let dropDownValue = dropDownResults.options[dropDownResults.selectedIndex].value;
 
     console.log(dropDownValue)
     localStorage.setItem("dropDownValue", dropDownValue)
-    populateStandings(dropDownValue);
+    confCode = dropDownValue;
+    populateAll();
 })
 
 
