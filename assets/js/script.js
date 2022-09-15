@@ -1,4 +1,3 @@
-
 // element variables
 let standingsTable = $('#standings-table-body');
 let tab1Title = $('#tab-1');
