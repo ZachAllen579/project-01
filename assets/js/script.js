@@ -7,6 +7,14 @@ let summaryPanel1 = $('#panel1');
 let summaryPanel3 = $('#panel3');
 let tabLabel3 = $('#panel3-label');
 let panel3TBody = $('#current-games-tbody');
+let youtubeSearch = "collegefootball"
+let video1 = $('#video1')
+let video2 = $('#video2')
+let video3 = $('#video3')
+let video4 = $('#video4')
+
+
+
 // dynamic page variables
 let currentWeek = whatWeek(moment().format('YYYY-MM-DD'));
 let confCode = localStorage.getItem("dropDownValue");
@@ -14,9 +22,21 @@ let confCode = localStorage.getItem("dropDownValue");
         confCode = 'SEC'
     }
     let YoutubeApiKey = 'AIzaSyCm0R29hvXS6W3QJE9f71gZg7i_ybzQyyM';
-    fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=collegefootball&type=video&key=${YoutubeApiKey}`)
+   
+   function searchYoutube() {
+    fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=${youtubeSearch}&type=video&key=${YoutubeApiKey}`)
     .then(response => response.json())
-    .then(data => console.log(data))
+    .then(data => {
+video1.attr("src", "https://www.youtube.com/watch?v=t5nTsgIG4jo")
+video2.attr("src", "https://www.youtube.com/watch?v=t5nTsgIG4jo")
+video3.attr("src", "https://www.youtube.com/watch?v=t5nTsgIG4jo")
+video4.attr("src", "https://www.youtube.com/watch?v=t5nTsgIG4jo")
+
+// modals go here!!!!!!
+
+        console.log(data)})
+   }
+
 
 //function to populate the standings based on the conference code.  
 function populateStandings(currentConfCode){
@@ -222,7 +242,9 @@ let lastChosenConference = localStorage.getItem("lastChosenConference");
 conferenceDropDownInput.addEventListener("change", function conferenceDropDown() {
     let dropDownResults = document.getElementById('conferenceChoice');
     let lastChosenConference = dropDownResults.options[dropDownResults.selectedIndex].value;
-    
+    youtubeSearch = lastChosenConference + "college football highlights"
+searchYoutube()
+
     console.log(lastChosenConference)
     localStorage.setItem("lastChosenConference", lastChosenConference)
     confCode = lastChosenConference;
