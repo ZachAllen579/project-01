@@ -8,6 +8,7 @@ let summaryPanel3 = $('#panel3');
 let tabLabel3 = $('#panel3-label');
 let panel3TBody = $('#current-games-tbody');
 let headlinesBox = $('#headlines-box');
+
 // dynamic page variables
 let currentWeek = whatWeek(moment().format('YYYY-MM-DD'));
 let confCode = localStorage.getItem("lastChosenConference");
@@ -15,11 +16,7 @@ let confCode = localStorage.getItem("lastChosenConference");
         confCode = 'SEC'
     }
 
-    let YoutubeApiKey = 'AIzaSyCm0R29hvXS6W3QJE9f71gZg7i_ybzQyyM';
 
-// fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=collegefootball&type=video&key=${YoutubeApiKey}`)
-// .then(response => response.json())
-// .then(data => console.log(data))
 
 //function to populate the standings based on the conference code.  
 function populateStandings(currentConfCode){
@@ -45,7 +42,7 @@ function populateStandings(currentConfCode){
         for (let i=0; i<data.length; i++){
             standingsTable.append(`
                 <tr>
-                    <td><a href="#" class="school-link" data-school="${data[i].team}">${data[i].team}</a></td>
+                    <td class="team-text"><a href="#" class="school-link" data-school="${data[i].team}">${data[i].team}</a></td>
                     <td>${data[i].conferenceGames.wins}-${data[i].conferenceGames.losses}</td>
                     <td>${data[i].total.wins}-${data[i].total.losses}</td>
                     <td>${data[i].total.games}</td>
