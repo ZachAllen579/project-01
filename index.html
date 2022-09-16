@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 1</title>
+    <title>NCAA College Football</title>
     <link rel="stylesheet" href="./assets/css/style.css">
 
     <link rel="stylesheet" href="./assets/css/foundation.css">
@@ -17,33 +17,36 @@
 </head>
 <body>
     <div class="grid-container">
-        <header class="top-bar">
+        <header class="top-bar headerBar">
+          <div class="siteName">
+            <img id="logo" src="./assets/img/football logo.png" alt="football logo">
+              <h1>College Sports News</h1>
+          </div>
+          
+          
             <div class="top-bar-right">
                 <p id="timeDate"></p>
             </div>
         </header>
         <div class="headerBar">
-          <div class="siteName">
-            <img id="logo" src="./assets/img/football logo.png" alt="football logo">
-              <h1>College Sports News</h1>
+          <label for="conferenceChoice"></label>
+          <div class="dropDown">
+            <select id="conferenceChoice">
+              <option disabled selected>Choose a conference!</option>
+              <option value="ACC">Atlantic Coast Conference (ACC)</option>
+              <option value="B12">Big 12</option>
+              <option value="B1G">Big Ten</option>
+              <option value="SEC">Southeastern Conference (SEC)</option>
+              <option value="CUSA">Conference USA</option>
+              <option value="IND">FBS Independents</option>
+              <option value="MAC">Mid-American</option>
+              <option value="MWC">Mountain West</option>
+              <option value="SBC">Sun Belt</option>
+              <option value="PAC">Pac-12</option>
+            </select>
           </div>
               
-          <label for="conferenceChoice"></label>
-                <div class="dropDown">
-                    <select id="conferenceChoice">
-                      <option disabled selected>Choose a conference!</option>
-                      <option value="ACC">Atlantic Coast Conference (ACC)</option>
-                      <option value="B12">Big 12</option>
-                      <option value="B1G">Big Ten</option>
-                      <option value="SEC">Southeastern Conference (SEC)</option>
-                      <option value="CUSA">Conference USA</option>
-                      <option value="IND">FBS Independents</option>
-                      <option value="MAC">Mid-American</option>
-                      <option value="MWC">Mountain West</option>
-                      <option value="SBC">Sun Belt</option>
-                      <option value="PAC">Pac-12</option>
-                    </select>
-                  </div>
+         
             </div>
         <main class="grid-x" id="main-row" style="margin-top:10px;">
             <div class="medium-6 large-6 cell small-order-2 medium-order-1" style="border:1px solid #000" id="summary-box">
