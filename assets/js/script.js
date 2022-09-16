@@ -7,8 +7,10 @@ let summaryPanel1 = $('#panel1');
 let summaryPanel3 = $('#panel3');
 let tabLabel3 = $('#panel3-label');
 let panel3TBody = $('#current-games-tbody');
-
-let youtubeSearch = "college%20football"
+let servicesURL = "https://forwarding-app-project-1.herokuapp.com";
+let localservicesURL = "http://127.0.0.1:3001"
+// uncomment below to switch to local service
+//servicesURL = localservicesURL;
 
 let videoEls = [$('#video1'), $('#video2'), $('#video3'), $('#video4')];
 
@@ -24,25 +26,22 @@ let confCode = localStorage.getItem("lastChosenConference");
     }
 
 
-    // let YoutubeApiKey = 'AIzaSyCm0R29hvXS6W3QJE9f71gZg7i_ybzQyyM';
-    // let YoutubeApiKey = 'AIzaSyBMc_27FPnjDDcUrRTJuX5T2v1RqY-Wq6g';
-    let YoutubeApiKey = 'AIzaSyAw8WRoNjAOYr3nL9uR4Ot3y7RPTWcdmrs';
-   
-   function searchYoutube() {
+ 
+function searchYoutube() {
     let conferenceLabel = whatConf(confCode)
     let queryString = conferenceLabel
     queryString += " week "+ (currentWeek-1) + " college football highlights"
-    fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=4&q=${queryString}&type=video&videoSyndicated=true&videoEmbeddable=true&key=${YoutubeApiKey}`)
+    fetch(`${servicesURL}/yt/search?part=snippet&maxResults=4&q=${queryString}&type=video&videoSyndicated=true&videoEmbeddable=true`)
     .then(response => response.json())
     .then(data => {
       console.log(data)
-let videosArray = data.items
-for (let i=0; i<videosArray.length; i++ ){
-    console.log(`https://www.youtube.com/watch?v=${videosArray[i].id.videoId}`)
-    videoEls[i].attr("src", `https://www.youtube.com/embed/${videosArray[i].id.videoId}`)
+        let videosArray = data.items
+        for (let i=0; i<videosArray.length; i++ ){
+            console.log(`https://www.youtube.com/watch?v=${videosArray[i].id.videoId}`)
+            videoEls[i].attr("src", `https://www.youtube.com/embed/${videosArray[i].id.videoId}`)
+        }
+      })
 }
-       })
-   }
 
 
 
@@ -51,10 +50,9 @@ for (let i=0; i<videosArray.length; i++ ){
 
 //function to populate the standings based on the conference code.  
 function populateStandings(currentConfCode){
-     // local end point for local testing
-    let localEndPoint = `http://127.0.0.1:3001/records?year=2022&conference=${currentConfCode}`;
+   
     // proxy endpoint nodejs app at our heroku deployment
-    let remoteEndPoint = `https://forwarding-app-project-1.herokuapp.com/records?year=2022&conference=${currentConfCode}`;
+    let remoteEndPoint = `${servicesURL}/cfd/records?year=2022&conference=${currentConfCode}`;
     fetch(remoteEndPoint)
     .then(function (response) {
         if (response.status===200){
@@ -233,7 +231,7 @@ function whatConf(code){
 
 //function to get the previous weeks games and optionally the next weeks games
 function getGames(week){
-    let remoteEndPoint = `https://forwarding-app-project-1.herokuapp.com/games?year=2022&week=${week}&seasonType=regular&conference=${confCode}`;
+    let remoteEndPoint = `${servicesURL}/cfd/games?year=2022&week=${week}&seasonType=regular&conference=${confCode}`;
     return fetch(remoteEndPoint)
     .then(function (response) {
          return response.json();
@@ -245,10 +243,10 @@ function getGames(week){
 
 async function populateHeadlines(){
     
-    let newsAPIKey = "5c8ccee4ac6f4dedb36d4f2ab9900626";
+   
     let fromDate = moment(whatBeginningDate(currentWeek)).subtract(2, 'days').format('YYYY-MM-DD');
     let currentConfString = whatConf(confCode);
-    let remoteEndPoint = `https://newsapi.org/v2/everything?q=${encodeURIComponent(currentConfString)}%20week%20${currentWeek-1}%20College%20Football&apiKey=${newsAPIKey}&from=${fromDate}&pageSize=4`
+    let remoteEndPoint = `${servicesURL}/news/everything?q=${encodeURIComponent(currentConfString)}%20week%20${currentWeek-1}%20College%20Football&from=${fromDate}&pageSize=4`
     headlinesBox.children('h3').text(`Week ${currentWeek-1} Headlines`);
     fetch(remoteEndPoint)
     .then(function (response) {
