@@ -24,11 +24,43 @@
     padding-left: 265px;
 }
 
+#article-div-box{
+    margin:8px 0 0 15px;
+    width:220px;
+    height:160px;
 
+    
+}
+#news-title{
+    margin: 5px 0 2px 20px;
+    color:#255ec9;
+}
 .favoriteTeamDropDown{
     padding: 200px 150px 10px 150px;
 }
 
+.custom-article-box{
+    padding:0 14px 4px 14px;
+}
+.custom-article-box img{
+    max-width: 220px;
+    border: 1px solid #255ec9;
+}
+.custom-article-box:hover {
+    background-color: #e6e6e6;
+}
+.custom-article-box h4{
+    font-size:23px;
+    font-weight:bold;
+}
+.venue-text{
+    font-size:small;
+    font-weight: bold;
+}
+.date-text{
+    font-size:12px;
+    font-weight: bold;
+}
 #favoriteTeam{
     text-align: center;
     border-color: black;
