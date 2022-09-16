@@ -35,9 +35,6 @@
     margin: 5px 0 2px 20px;
     color:#255ec9;
 }
-.favoriteTeamDropDown{
-    padding: 200px 150px 10px 150px;
-}
 
 .custom-article-box{
     padding:0 14px 4px 14px;
@@ -71,7 +68,7 @@
 }
 
 .teamDetails{
-    display: flex;
-    flex-direction: column;
-    
+padding-top: 15px;
+font-size: 24px;
+margin-left: 25px;
 }

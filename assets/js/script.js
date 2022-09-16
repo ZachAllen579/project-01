@@ -339,12 +339,11 @@ let currentTime = setInterval(function () {
 
 
 
-let conferenceDropDownInput = document.getElementById('conferenceChoice')
-let lastChosenConference = localStorage.getItem("lastChosenConference");
 
 // Drop down box to be able to choose what conference you want to see
 
-
+let conferenceDropDownInput = document.getElementById('conferenceChoice')
+let lastChosenConference = localStorage.getItem("lastChosenConference");
 
 conferenceDropDownInput.addEventListener("change", function conferenceDropDown() {
     let dropDownResults = document.getElementById('conferenceChoice');
@@ -367,6 +366,8 @@ let summaryBox = $('#tabs-box')
 
 summaryBox.on('click', handleTeamClick)
 
+let schoolString = "Alabama"
+
 function handleTeamClick(event) {
 
     let element = event.target;
@@ -384,8 +385,6 @@ function handleTeamClick(event) {
     function populateTeamDetails(schoolString) {
     let apiUrl = `https://forwarding-app-project-1.herokuapp.com/games?year=2022&seasonType=regular&team=${schoolString}`
     $('.teamDetails').text("");
-    console.log("Heres my school string")
-    console.log(schoolString)
     fetch(apiUrl)
     .then(function (response) {
       return response.json();
@@ -395,8 +394,7 @@ function handleTeamClick(event) {
             teamDetails.append(`
                 
                 <tr>
-                    <td>Week ${data[i].week}</td>
-                    <td>${data[i].away_team} @ ${data[i].home_team}</td>
+                    <td>Week ${data[i].week} : ${data[i].away_team} @ ${data[i].home_team}</td>
                 </tr>
             
             `)
