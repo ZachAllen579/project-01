@@ -9,6 +9,7 @@ let tabLabel3 = $('#panel3-label');
 let panel3TBody = $('#current-games-tbody');
 let servicesURL = "https://forwarding-app-project-1.herokuapp.com";
 let localservicesURL = "http://127.0.0.1:3001"
+let teamDetailsTbody = $('#teamDetailsTbody')
 // uncomment below to switch to local service
 //servicesURL = localservicesURL;
 
@@ -277,6 +278,7 @@ async function populateHeadlines(){
     });
 }
 
+
 // function to populate last weeks' games
 async function populateGames(){
     
@@ -343,7 +345,7 @@ function populateAll(){
     populateGames();
     populateHeadlines();
     searchYoutube();
-
+    populateTeamDetails("");
 }
 
 //initialization function to run on page load.
@@ -394,8 +396,6 @@ let summaryBox = $('#tabs-box')
 
 summaryBox.on('click', handleTeamClick)
 
-let schoolString = "Alabama"
-
 function handleTeamClick(event) {
 
     let element = event.target;
@@ -405,21 +405,23 @@ function handleTeamClick(event) {
         let jqueryElement = $(event.target)
         schoolString = jqueryElement.attr('data-school')
         populateTeamDetails(schoolString)
-        $('#teamName').text(schoolString)
     }
     return false
 }
-
     function populateTeamDetails(schoolString) {
-    let apiUrl = `https://forwarding-app-project-1.herokuapp.com/games?year=2022&seasonType=regular&team=${schoolString}`
-    $('.teamDetails').text("");
+    if ((schoolString === "") || (schoolString === null)) {
+        schoolString = "Alabama"
+    }
+    $('#teamName').text(schoolString)
+    let apiUrl = `${servicesURL}/cfd/games?year=2022&seasonType=regular&team=${schoolString}`
+    teamDetailsTbody.html("");
     fetch(apiUrl)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
         for (let i=0; i<data.length; i++){
-            teamDetails.append(`
+            teamDetailsTbody.append(`
                 
                 <tr>
                     <td>Week ${data[i].week} : ${data[i].away_team} @ ${data[i].home_team}</td>
