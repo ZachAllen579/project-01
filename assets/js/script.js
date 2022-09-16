@@ -7,7 +7,15 @@ let summaryPanel1 = $('#panel1');
 let summaryPanel3 = $('#panel3');
 let tabLabel3 = $('#panel3-label');
 let panel3TBody = $('#current-games-tbody');
+
+let youtubeSearch = "college%20football"
+
+let videoEls = [$('#video1'), $('#video2'), $('#video3'), $('#video4')];
+
+
+
 let headlinesBox = $('#headlines-box');
+
 // dynamic page variables
 let currentWeek = whatWeek(moment().format('YYYY-MM-DD'));
 let confCode = localStorage.getItem("lastChosenConference");
@@ -15,11 +23,29 @@ let confCode = localStorage.getItem("lastChosenConference");
         confCode = 'SEC'
     }
 
-    let YoutubeApiKey = 'AIzaSyCm0R29hvXS6W3QJE9f71gZg7i_ybzQyyM';
+    // let YoutubeApiKey = 'AIzaSyCm0R29hvXS6W3QJE9f71gZg7i_ybzQyyM';
+    // let YoutubeApiKey = 'AIzaSyBMc_27FPnjDDcUrRTJuX5T2v1RqY-Wq6g';
+    let YoutubeApiKey = 'AIzaSyAw8WRoNjAOYr3nL9uR4Ot3y7RPTWcdmrs';
+   
+   function searchYoutube() {
+    let conferenceLabel = whatConf(confCode)
+    let queryString = conferenceLabel
+    queryString += " week "+ (currentWeek-1) + " college football highlights"
+    fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=4&q=${queryString}&type=video&videoSyndicated=true&videoEmbeddable=true&key=${YoutubeApiKey}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+let videosArray = data.items
+for (let i=0; i<videosArray.length; i++ ){
+    console.log(`https://www.youtube.com/watch?v=${videosArray[i].id.videoId}`)
+    videoEls[i].attr("src", `https://www.youtube.com/embed/${videosArray[i].id.videoId}`)
+}
+       })
+   }
 
-// fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=collegefootball&type=video&key=${YoutubeApiKey}`)
-// .then(response => response.json())
-// .then(data => console.log(data))
+
+
+
 
 //function to populate the standings based on the conference code.  
 function populateStandings(currentConfCode){
@@ -316,6 +342,7 @@ function populateAll(){
     populateStandings(confCode); 
     populateGames();
     populateHeadlines();
+    searchYoutube();
 
 }
 
@@ -350,7 +377,9 @@ let lastChosenConference = localStorage.getItem("lastChosenConference");
 conferenceDropDownInput.addEventListener("change", function conferenceDropDown() {
     let dropDownResults = document.getElementById('conferenceChoice');
     let lastChosenConference = dropDownResults.options[dropDownResults.selectedIndex].value;
-    
+    youtubeSearch = lastChosenConference + "college football highlights"
+
+
     console.log(lastChosenConference)
     localStorage.setItem("lastChosenConference", lastChosenConference)
     confCode = lastChosenConference;
@@ -362,3 +391,4 @@ function renderLastRegistered() {
 }
 
 renderLastRegistered()
+
