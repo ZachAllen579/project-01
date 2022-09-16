@@ -8,6 +8,7 @@ let summaryPanel3 = $('#panel3');
 let tabLabel3 = $('#panel3-label');
 let panel3TBody = $('#current-games-tbody');
 let headlinesBox = $('#headlines-box');
+let teamDetails = $('.teamDetails')
 // dynamic page variables
 let currentWeek = whatWeek(moment().format('YYYY-MM-DD'));
 let confCode = localStorage.getItem("lastChosenConference");
@@ -211,8 +212,8 @@ function getGames(week){
          return response.json();
        
     })
-          
-    
+        
+      
 }
 
 async function populateHeadlines(){
@@ -339,12 +340,10 @@ let currentTime = setInterval(function () {
 
 
 let conferenceDropDownInput = document.getElementById('conferenceChoice')
-let favoriteTeam = document.getElementById("teamName")
-let favoriteTeamDropDown = document.getElementById('favoriteTeam')
-let lastFavoriteTeam = localStorage.getItem("favoriteTeam");
 let lastChosenConference = localStorage.getItem("lastChosenConference");
 
 // Drop down box to be able to choose what conference you want to see
+
 
 
 conferenceDropDownInput.addEventListener("change", function conferenceDropDown() {
@@ -362,3 +361,46 @@ function renderLastRegistered() {
 }
 
 renderLastRegistered()
+
+
+let summaryBox = $('#tabs-box')
+
+summaryBox.on('click', handleTeamClick)
+
+function handleTeamClick(event) {
+
+    let element = event.target;
+    let schoolString = ""
+
+    if (element.matches("a") === true) {
+        let jqueryElement = $(event.target)
+        schoolString = jqueryElement.attr('data-school')
+        populateTeamDetails(schoolString)
+        $('#teamName').text(schoolString)
+    }
+    return false
+}
+
+    function populateTeamDetails(schoolString) {
+    let apiUrl = `https://forwarding-app-project-1.herokuapp.com/games?year=2022&seasonType=regular&team=${schoolString}`
+    $('.teamDetails').text("");
+    console.log("Heres my school string")
+    console.log(schoolString)
+    fetch(apiUrl)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+        for (let i=0; i<data.length; i++){
+            teamDetails.append(`
+                
+                <tr>
+                    <td>Week ${data[i].week}</td>
+                    <td>${data[i].away_team} @ ${data[i].home_team}</td>
+                </tr>
+            
+            `)
+        }
+    });
+}
+

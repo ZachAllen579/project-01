@@ -70,3 +70,8 @@
     text-align: center;
 }
 
+.teamDetails{
+    display: flex;
+    flex-direction: column;
+    
+}
