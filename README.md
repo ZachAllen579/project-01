@@ -12,6 +12,7 @@
     A College Football entertainment webapp for college football fans to track the season's progress for their favorite teams and conferences.  
     Our webapp dynamically populates modularized widgets asynchronously for good user experience.  
   </p> <br />
+  <div align="left">
        This webapp was built using:
     <ul>
         <li>Foundation CSS Framework</li>
@@ -26,6 +27,9 @@
         <li>newsapi.org API v2</li>
         <li>YouTube Data API v3</li>
     </ul>
+    A Proxy Service was needed for API Key Storage and Cors Issue resolution:
+    <a href="https://github.com/conradjohnson/node-forwarder"> github.com/conradjohnson/node-forwarder</a>
+    </div>
     <br />
     <a href="https://zachallen579.github.io/project-01" target="_blank">View Demo</a>
     ·
@@ -45,7 +49,7 @@
     <br/>
     <br/>
     Screen Grab 3:<br/>
-    <img src="assets/img/screen3.png" alt="Screen Grab 3" />
+    <img src="assets/img/screenshot3.png" alt="Screen Grab 3" />
     <br/>
     <br/>
     <br/>
