@@ -35,12 +35,12 @@
     <br/><br/><br/>
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
     Screen Grab 1:<br/>
-    <img src="assets/img/screen1.png" alt="Screen Grab 1" />
+    <img src="assets/img/screenshot1.png" alt="Screen Grab 1" />
     <br/>
     <br/>
     <br/>
     Screen Grab 2:<br/>
-    <img src="assets/img/screen2.png" alt="Screen Grab 2" />
+    <img src="assets/img/screenshot2.png" alt="Screen Grab 2" />
     <br/>
     <br/>
     <br/>
