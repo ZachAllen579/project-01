@@ -9,6 +9,7 @@ let tabLabel3 = $('#panel3-label');
 let panel3TBody = $('#current-games-tbody');
 let servicesURL = "https://forwarding-app-project-1.herokuapp.com";
 let localservicesURL = "http://127.0.0.1:3001"
+let teamDetailsTbody = $('#teamDetailsTbody')
 // uncomment below to switch to local service
 //servicesURL = localservicesURL;
 
@@ -17,7 +18,7 @@ let videoEls = [$('#video1'), $('#video2'), $('#video3'), $('#video4')];
 
 
 let headlinesBox = $('#headlines-box');
-
+let teamDetails = $('.teamDetails')
 // dynamic page variables
 let currentWeek = whatWeek(moment().format('YYYY-MM-DD'));
 let confCode = localStorage.getItem("lastChosenConference");
@@ -237,8 +238,8 @@ function getGames(week){
          return response.json();
        
     })
-          
-    
+        
+      
 }
 
 async function populateHeadlines(){
@@ -276,6 +277,7 @@ async function populateHeadlines(){
         
     });
 }
+
 
 // function to populate last weeks' games
 async function populateGames(){
@@ -343,7 +345,7 @@ function populateAll(){
     populateGames();
     populateHeadlines();
     searchYoutube();
-
+    populateTeamDetails("");
 }
 
 //initialization function to run on page load.
@@ -365,14 +367,11 @@ let currentTime = setInterval(function () {
 
 
 
-let conferenceDropDownInput = document.getElementById('conferenceChoice')
-let favoriteTeam = document.getElementById("teamName")
-let favoriteTeamDropDown = document.getElementById('favoriteTeam')
-let lastFavoriteTeam = localStorage.getItem("favoriteTeam");
-let lastChosenConference = localStorage.getItem("lastChosenConference");
 
 // Drop down box to be able to choose what conference you want to see
 
+let conferenceDropDownInput = document.getElementById('conferenceChoice')
+let lastChosenConference = localStorage.getItem("lastChosenConference");
 
 conferenceDropDownInput.addEventListener("change", function conferenceDropDown() {
     let dropDownResults = document.getElementById('conferenceChoice');
@@ -391,4 +390,45 @@ function renderLastRegistered() {
 }
 
 renderLastRegistered()
+
+
+let summaryBox = $('#tabs-box')
+
+summaryBox.on('click', handleTeamClick)
+
+function handleTeamClick(event) {
+
+    let element = event.target;
+    let schoolString = ""
+
+    if (element.matches("a") === true) {
+        let jqueryElement = $(event.target)
+        schoolString = jqueryElement.attr('data-school')
+        populateTeamDetails(schoolString)
+    }
+    return false
+}
+    function populateTeamDetails(schoolString) {
+    if ((schoolString === "") || (schoolString === null)) {
+        schoolString = "Alabama"
+    }
+    $('#teamName').text(schoolString)
+    let apiUrl = `${servicesURL}/cfd/games?year=2022&seasonType=regular&team=${schoolString}`
+    teamDetailsTbody.html("");
+    fetch(apiUrl)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+        for (let i=0; i<data.length; i++){
+            teamDetailsTbody.append(`
+                
+                <tr>
+                    <td>Week ${data[i].week} : ${data[i].away_team} @ ${data[i].home_team}</td>
+                </tr>
+            
+            `)
+        }
+    });
+}
 
