@@ -70,8 +70,13 @@
     text-align: center;
 }
 
+
+.highlightsBar{
+    text-align: center;
+
 .teamDetails{
 padding-top: 15px;
 font-size: 24px;
 margin-left: 25px;
+>>>>>>> 98174a845713d0ffaaceac59a8edc2e3c3a63194
 }
