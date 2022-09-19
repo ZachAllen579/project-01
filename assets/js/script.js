@@ -90,49 +90,49 @@ function whatWeek(date){
     let weekNum = 0;
 
     // resolution table for week #s in football season
-    if ((date>'2022-08-05')&&(date<='2022-09-05')){
+    if ((date>'2022-08-04')&&(date<='2022-09-04')){
         // week 1 August 5 - September 5
         weekNum = 1;
-    } else if ((date>='2022-09-06')&&(date<='2022-09-12')){
+    } else if ((date>='2022-09-05')&&(date<='2022-09-11')){
     // week 2 September 6 - 12
         weekNum = 2;
-    } else if ((date>='2022-09-13')&&(date<='2022-09-19')){
+    } else if ((date>='2022-09-12')&&(date<='2022-09-18')){
     // week 3 September 13 - 19
         weekNum = 3;
-    } else if ((date>='2022-09-20')&&(date<='2022-09-26')){
+    } else if ((date>='2022-09-19')&&(date<='2022-09-25')){
     // week 4 September 20 - 26
         weekNum = 4;
-    } else if ((date>='2022-09-27')&&(date<='2022-10-03')){
+    } else if ((date>='2022-09-26')&&(date<='2022-10-02')){
     // week 5 September 27 - October 3
         weekNum = 5;
-    } else if ((date>='2022-10-04')&&(date<='2022-10-10')){
+    } else if ((date>='2022-10-03')&&(date<='2022-10-09')){
     // week 6 October 4 - 10
         weekNum = 6;
-    } else if ((date>='2022-10-11')&&(date<='2022-10-17')){
+    } else if ((date>='2022-10-10')&&(date<='2022-10-16')){
     // week 7 October 11 - 17
         weekNum = 7;
-    } else if ((date>='2022-10-18')&&(date<='2022-10-24')){
+    } else if ((date>='2022-10-17')&&(date<='2022-10-23')){
     // week 8 October 18 - 24
         weekNum = 8;
-    } else if ((date>='2022-10-24')&&(date<='2022-10-31')){
+    } else if ((date>='2022-10-23')&&(date<='2022-10-30')){
     // week 9 October 25 - 31
         weekNum = 9;
-    } else if ((date>='2022-11-01')&&(date<='2022-11-07')){
+    } else if ((date>='2022-10-31')&&(date<='2022-11-06')){
     // week 10 November 1 - 7
         weekNum = 10;
-    } else if ((date>='2022-11-08')&&(date<='2022-11-14')){
+    } else if ((date>='2022-11-07')&&(date<='2022-11-13')){
     // week 11 November 8 - 14
         weekNum = 11;
-    } else if ((date>='2022-11-15')&&(date<='2022-11-21')){
+    } else if ((date>='2022-11-14')&&(date<='2022-11-20')){
     // week 12 November 15 - 21
         weekNum = 12;
-    } else if ((date>='2022-11-22')&&(date<='2022-11-28')){
+    } else if ((date>='2022-11-21')&&(date<='2022-11-27')){
     // week 13 November 22 - 28
         weekNum = 13;
-    } else if ((date>='2022-11-29')&&(date<='2022-12-05')){
+    } else if ((date>='2022-11-28')&&(date<='2022-12-04')){
     // week 14 November 29 - December 5
         weekNum = 14;
-    } else if (date>'2022-12-05'){
+    } else if (date>'2022-12-04'){
     // week 15 December 6 - 10
         weekNum = 15;
     // week 16 Dec 11 - Jan 10
@@ -412,8 +412,10 @@ function handleTeamClick(event) {
     if ((schoolString === "") || (schoolString === null)) {
         schoolString = "Alabama"
     }
+    encodeURIComponent
     $('#teamName').text(schoolString)
-    let apiUrl = `${servicesURL}/cfd/games?year=2022&seasonType=regular&team=${schoolString}`
+    console.log(encodeURIComponent("Texas A&M"));
+    let apiUrl = `${servicesURL}/cfd/games?year=2022&seasonType=regular&team=${encodeURIComponent(schoolString)}`
     teamDetailsTbody.html("");
     fetch(apiUrl)
     .then(function (response) {
